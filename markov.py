@@ -34,15 +34,17 @@ def make_chains(text_string, num):
 
     words = text_string.split()
 
-    for i in range(len(words) - 1):
-        word_pair = ()
-        
-        while len(word_pair) < num: 
-            word_pair += #Rebind tuple to tuple + next_word until len = num
-            chains[word_pair] = chains.get(word_pair, []) #Initializing key,pair value for chains
+    for i in range(len(words) - (num - 1)): #Only initialize n_gram if there are enough words to fill
+        n_gram = () #Empty tuple for keys
+    
+        for j in range(num):
+            #Add words to n_gram as tuple, in order, until desired length reached
+            n_gram += (words[i + j],) 
 
-            if i + 2 < len(words): #Appending word following word_pair
-                chains[word_pair].append(words[i + 2])
+        chains[n_gram] = chains.get(n_gram, []) #Initializing key,pair value for chains
+
+        if i + num < len(words): #Appending word following n_gram to value list
+            chains[n_gram].append(words[i + num])
 
     return chains
 
@@ -72,7 +74,7 @@ input_path = sys.argv[1]
 input_text = open_and_read_file(input_path)
 
 # Get a Markov chain
-chains = make_chains(input_text)
+chains = make_chains(input_text,3)
 
 # Produce random text
 random_text = make_text(chains)

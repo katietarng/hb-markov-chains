@@ -50,10 +50,18 @@ def make_text(chains):
 
     text = ""
 
-    # your code goes here
+    key = choice(chains.keys()) #Choosing random key from chains dict
+
+    text = key[0] + " " + key[1] #Adding first word pair to text 
+
+    while chains[key] != []:
+        #Choosing random word from value list, append to text, generate new key, repeat
+
+        next_word = choice(chains[key])
+        text = text + " " + next_word
+        key = (key[1], next_word)
 
     return text
-
 
 input_path = "green-eggs.txt"
 
@@ -63,7 +71,7 @@ input_text = open_and_read_file(input_path)
 # Get a Markov chain
 chains = make_chains(input_text)
 
-# # Produce random text
-# random_text = make_text(chains)
+# Produce random text
+random_text = make_text(chains)
 
-# print random_text
+print random_text

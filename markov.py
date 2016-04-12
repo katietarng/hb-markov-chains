@@ -63,6 +63,7 @@ def make_text(chains):
 
     return text
 
+
 input_path = "green-eggs.txt"
 
 # Open the file and turn it into one long string

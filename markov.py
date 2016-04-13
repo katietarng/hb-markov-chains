@@ -1,5 +1,5 @@
-from random import choice
 import sys
+from random import choice
 
 def open_and_read_file(file_path):
     """Takes file path as string; returns text as string.
@@ -53,19 +53,27 @@ def make_chains(text_string, num):
 
 
 def make_text(chains):
-    """Takes dictionary of markov chains; returns random text."""
+    """Takes dictionary of markov chains.
+        Returns random text beginning with a capitalized letter and ending with a punctuation.
+
+    """
 
     text = ""
-
     key = choice(chains.keys()) #Choosing random key from chains dict
+    punctuation = ['!', '.', '?'] #Designate final punctuation marks
+
+    # Keep pulling keys at random until you find one whose first item begins with an uppercase letter
+    while not key[0][0].isupper():
+        key = choice(chains.keys())
 
     text = text + key[0]
 
     for i in range(1,len(key)):    
         text = text + " " + key[i]  #Adding first word pair to text 
 
-    while chains[key] != []:
-        #Choosing random word from value list, append to text, generate new key, repeat
+    #Choosing random word from value list, append to text, generate new key, repeat
+    #Repeat until loop reaches end of original file or punctuation in punctuation list 
+    while chains[key] != [] and key[-1][-1] not in punctuation:
 
         next_word = choice(chains[key])
         text = text + " " + next_word

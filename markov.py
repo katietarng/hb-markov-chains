@@ -29,21 +29,24 @@ def make_chains(text_string, num):
         >>> make_chains("hi there mary hi there juanita")
         {('hi', 'there'): ['mary', 'juanita'], ('there', 'mary'): ['hi'], ('mary', 'hi': ['there']}
     """
-
+    # Initialize empty dictionary
     chains = {}
 
     words = text_string.split()
 
-    for i in range(len(words) - (num - 1)): #Only initialize n_gram if there are enough words to fill
+    # Iterate over every word in list until there aren't enough words left to fill a tuple of [num] length
+    for i in range(len(words) - (num - 1)): 
         n_gram = () #Empty tuple for keys
     
+        #Add word at index [i], and all following words, until tuple is [num] words long
         for j in range(num):
-            #Add words to n_gram as tuple, in order, until desired length reached
             n_gram += (words[i + j],) 
 
-        chains[n_gram] = chains.get(n_gram, []) #Initializing key,pair value for chains
+        #If key does not exist in dictionary, initialize key with value = empty list    
+        chains[n_gram] = chains.get(n_gram, [])
 
-        if i + num < len(words): #Appending word following n_gram to value list
+        #Append word following last word in key, if one exists
+        if i + num < len(words): 
             chains[n_gram].append(words[i + num])
 
     return chains
@@ -56,7 +59,9 @@ def make_text(chains):
 
     key = choice(chains.keys()) #Choosing random key from chains dict
 
-    for i in range(len(key)):    
+    text = text + key[0]
+
+    for i in range(1,len(key)):    
         text = text + " " + key[i]  #Adding first word pair to text 
 
     while chains[key] != []:

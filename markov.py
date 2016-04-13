@@ -56,7 +56,10 @@ def make_text(chains):
 
     key = choice(chains.keys()) #Choosing random key from chains dict
 
-    text = key[0] + " " + key[1] #Adding first word pair to text 
+    for i in range(len(key)):    
+        text = text + " " + key[i]  #Adding first word pair to text 
+
+    print text
 
     while chains[key] != []:
         #Choosing random word from value list, append to text, generate new key, repeat

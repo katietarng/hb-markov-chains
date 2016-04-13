@@ -59,25 +59,24 @@ def make_text(chains):
     for i in range(len(key)):    
         text = text + " " + key[i]  #Adding first word pair to text 
 
-    print text
-
     while chains[key] != []:
         #Choosing random word from value list, append to text, generate new key, repeat
 
         next_word = choice(chains[key])
         text = text + " " + next_word
-        key = (key[1], next_word)
+        key = key[1:] + (next_word,)
 
     return text
 
-
+#Get variables from command line 
 input_path = sys.argv[1]
+input_num = int(sys.argv[2]) 
 
 # Open the file and turn it into one long string
 input_text = open_and_read_file(input_path)
 
 # Get a Markov chain
-chains = make_chains(input_text,3)
+chains = make_chains(input_text,input_num)
 
 # Produce random text
 random_text = make_text(chains)

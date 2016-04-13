@@ -1,17 +1,21 @@
 import sys
 from random import choice
 
-def open_and_read_file(file_path):
+def open_and_read_file(file_path1, file_path2):
     """Takes file path as string; returns text as string.
 
     Takes a string that is a file path, opens the file, and turns
     the file's contents as one string of text.
     """
 
-    the_file = open(file_path)
-    file_text = the_file.read()
+    file_one = open(file_path1)
+    file_two = open(file_path2)
 
-    the_file.close()
+    file_text = file_one.read() + file_two.read()
+
+    file_one.close()
+    file_two.close()
+
 
     #Note the new line characters still exist in super string
     return file_text
@@ -49,6 +53,7 @@ def make_chains(text_string, num):
         if i + num < len(words): 
             chains[n_gram].append(words[i + num])
 
+
     return chains
 
 
@@ -82,11 +87,12 @@ def make_text(chains):
     return text
 
 #Get variables from command line 
-input_path = sys.argv[1]
-input_num = int(sys.argv[2]) 
+input_path1 = sys.argv[1]
+input_path2 = sys.argv[2]
+input_num = int(sys.argv[3]) 
 
 # Open the file and turn it into one long string
-input_text = open_and_read_file(input_path)
+input_text = open_and_read_file(input_path1, input_path2)
 
 # Get a Markov chain
 chains = make_chains(input_text,input_num)
